@@ -1,0 +1,26 @@
+:host ::ng-deep {
+  .p-card {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .p-card-body {
+    padding: 1.5rem;
+  }
+
+  .p-progressbar {
+    border-radius: 4px;
+  }
+
+  .progress-low .p-progressbar-value {
+    background: #22c55e !important;
+  }
+
+  .progress-medium .p-progressbar-value {
+    background: #f59e0b !important;
+  }
+
+  .progress-high .p-progressbar-value {
+    background: #ef4444 !important;
+  }
+}

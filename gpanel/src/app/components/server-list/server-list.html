@@ -1,0 +1,87 @@
+<!--<div class="p-6">-->
+<!--  <h1 class="text-3xl font-bold mb-6 text-gray-800">Docker Server Monitor</h1>-->
+
+<!--  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">-->
+<!--    <p-card *ngFor="let server of servers" class="shadow-lg hover:shadow-xl transition-shadow">-->
+<!--      <ng-template pTemplate="header">-->
+<!--        <div class="p-4 bg-gradient-to-r from-blue-500 to-blue-600">-->
+<!--          <div class="flex justify-between items-center">-->
+<!--            <h3 class="text-xl font-semibold text-white">{{ server.name }}</h3>-->
+<!--            <p-tag-->
+<!--              [value]="server.status"-->
+<!--              [severity]="server.status === 'online' ? 'success' : 'danger'"-->
+<!--              [rounded]="true">-->
+<!--            </p-tag>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </ng-template>-->
+
+<!--      <div class="space-y-4">-->
+<!--        &lt;!&ndash; Server IP &ndash;&gt;-->
+<!--        <div class="flex items-center">-->
+<!--          <i class="pi pi-server mr-2 text-gray-600"></i>-->
+<!--          <span class="text-sm text-gray-600 mr-2">IP:</span>-->
+<!--          <span class="font-mono text-sm font-semibold">{{ server.ip }}</span>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Runtime &ndash;&gt;-->
+<!--        <div class="flex items-center">-->
+<!--          <i class="pi pi-clock mr-2 text-gray-600"></i>-->
+<!--          <span class="text-sm text-gray-600 mr-2">Runtime:</span>-->
+<!--          <span class="text-sm font-semibold">{{ server.runtime }}</span>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; CPU Usage &ndash;&gt;-->
+<!--        <div>-->
+<!--          <div class="flex justify-between items-center mb-2">-->
+<!--            <div class="flex items-center">-->
+<!--              <i class="pi pi-microchip mr-2 text-gray-600"></i>-->
+<!--              <span class="text-sm text-gray-600">CPU</span>-->
+<!--            </div>-->
+<!--            <span class="text-sm font-semibold">{{ server.cpuUsage }}%</span>-->
+<!--          </div>-->
+<!--          <p-progressBar-->
+<!--            [value]="server.cpuUsage"-->
+<!--            [showValue]="false"-->
+<!--            [style]="{'height': '8px'}"-->
+<!--            [styleClass]="getCpuProgressClass(server.cpuUsage)">-->
+<!--          </p-progressBar>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; RAM Usage &ndash;&gt;-->
+<!--        <div>-->
+<!--          <div class="flex justify-between items-center mb-2">-->
+<!--            <div class="flex items-center">-->
+<!--              <i class="pi pi-database mr-2 text-gray-600"></i>-->
+<!--              <span class="text-sm text-gray-600">RAM</span>-->
+<!--            </div>-->
+<!--            <span class="text-sm font-semibold">{{ server.ramUsage }}%</span>-->
+<!--          </div>-->
+<!--          <p-progressBar-->
+<!--            [value]="server.ramUsage"-->
+<!--            [showValue]="false"-->
+<!--            [style]="{'height': '8px'}"-->
+<!--            [styleClass]="getRamProgressClass(server.ramUsage)">-->
+<!--          </p-progressBar>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </p-card>-->
+<!--  </div>-->
+<!--</div>-->
+
+<h3>Server List</h3>
+<p-table [value]="servers" stripedRows [tableStyle]="{'min-width': '50rem'}">
+  <ng-template #header>
+    <tr>
+
+    </tr>
+  </ng-template>
+  <ng-template #body let-servers>
+    <tr>
+      <td>{{servers.name}}</td>
+      <td>{{servers.name}}</td>
+      <td>{{servers.name}}</td>
+      <td>{{servers.name}}</td>
+    </tr>
+  </ng-template>
+</p-table>
