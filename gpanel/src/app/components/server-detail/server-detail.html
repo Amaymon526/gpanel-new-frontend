@@ -1,0 +1,118 @@
+<div class="server-detail-container">
+  <div class="back-button-container">
+    <p-button
+      label="Back to Overview"
+      icon="pi pi-arrow-left"
+      (click)="goBack()"
+      [outlined]="true">
+    </p-button>
+  </div>
+
+  <div *ngIf="server" class="detail-content">
+    <p-card class="detail-card">
+      <ng-template pTemplate="header">
+        <div class="detail-header">
+          <h1>{{ server.name }}</h1>
+          <p-tag
+            [value]="server.status === 'online' ? 'Online' : 'Offline'"
+            [severity]="server.status === 'online' ? 'success' : 'danger'">
+          </p-tag>
+        </div>
+      </ng-template>
+
+      <div class="detail-grid">
+        <!-- Basic Information Section -->
+        <div class="info-section">
+          <h2>Basic Information</h2>
+          <div class="info-items">
+            <p-chip class="!py-0 !pl-0 !pr-4">
+              <span class="info-label">Server ID:</span>
+              <span class="info-label info-value">{{ server.id }}</span>
+            </p-chip>
+
+            <p-chip class="!py-0 !pl-0 !pr-4">
+              <span class="info-label">IP Address:</span>
+              <p-tag
+                value="{{ server.ip }}"
+                class="clickable-tag"
+                [ngClass]="{'copied': ipCopied}"
+                (click)="copyToClipboard(server.ip)"
+                pTooltip="Click to copy"
+                tooltipPosition="top" />
+            </p-chip>
+
+            <p-chip class="!py-0 !pl-0 !pr-4">
+              <span class="info-label">Runtime:</span>
+              <span class="info-label info-value">{{ server.runtime }}</span>
+            </p-chip>
+          </div>
+        </div>
+
+        <!-- Resource Usage Section -->
+        <div class="info-section">
+          <h2>Resource Usage</h2>
+          <div class="usage-items">
+            <!-- CPU Usage -->
+            <div class="usage-item">
+              <div class="usage-header">
+                <span class="usage-label">CPU Usage</span>
+                <span class="usage-value">{{ server.cpuUsage }}%</span>
+              </div>
+              <div class="progress-bar-container">
+                <div
+                  class="progress-bar"
+                  [ngClass]="{
+                    'progress-low': server.cpuUsage < 50,
+                    'progress-medium': server.cpuUsage >= 50 && server.cpuUsage < 80,
+                    'progress-high': server.cpuUsage >= 80
+                  }"
+                  [style.width.%]="server.cpuUsage">
+                </div>
+              </div>
+            </div>
+
+            <!-- RAM Usage -->
+            <div class="usage-item">
+              <div class="usage-header">
+                <span class="usage-label">RAM Usage</span>
+                <span class="usage-value">{{ server.ramUsage }}%</span>
+              </div>
+              <div class="progress-bar-container">
+                <div
+                  class="progress-bar"
+                  [ngClass]="{
+                    'progress-low': server.ramUsage < 50,
+                    'progress-medium': server.ramUsage >= 50 && server.ramUsage < 80,
+                    'progress-high': server.ramUsage >= 80
+                  }"
+                  [style.width.%]="server.ramUsage">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional sections can be added here -->
+      <div class="additional-info">
+        <h2>Server Management</h2>
+        <p class="placeholder-text">Additional server management options will be available here.</p>
+      </div>
+    </p-card>
+  </div>
+
+  <div *ngIf="!server" class="error-container">
+    <p-card>
+      <div class="error-content">
+        <i class="pi pi-exclamation-triangle error-icon"></i>
+        <h2>Server not found</h2>
+        <p>The server with ID "{{ serverId }}" could not be found.</p>
+        <p-button
+          label="Back to Overview"
+          icon="pi pi-arrow-left"
+          (click)="goBack()">
+        </p-button>
+      </div>
+    </p-card>
+  </div>
+</div>

@@ -1,87 +1,81 @@
-<!--<div class="p-6">-->
-<!--  <h1 class="text-3xl font-bold mb-6 text-gray-800">Docker Server Monitor</h1>-->
+<!-- Server Details Card Grid -->
+<div class="server-grid-container">
+  <p-card class="main-card">
+    <ng-template pTemplate="header">
+      <div class="card-header">
+        <h2>Server Details</h2>
+      </div>
+    </ng-template>
 
-<!--  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">-->
-<!--    <p-card *ngFor="let server of servers" class="shadow-lg hover:shadow-xl transition-shadow">-->
-<!--      <ng-template pTemplate="header">-->
-<!--        <div class="p-4 bg-gradient-to-r from-blue-500 to-blue-600">-->
-<!--          <div class="flex justify-between items-center">-->
-<!--            <h3 class="text-xl font-semibold text-white">{{ server.name }}</h3>-->
-<!--            <p-tag-->
-<!--              [value]="server.status"-->
-<!--              [severity]="server.status === 'online' ? 'success' : 'danger'"-->
-<!--              [rounded]="true">-->
-<!--            </p-tag>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </ng-template>-->
+    <div class="server-grid">
+      <p-card *ngFor="let server of servers" class="server-card clickable" (click)="navigateToServer(server.id)">
+        <ng-template pTemplate="header">
+          <div class="server-card-header">
+            <h3>{{ server.name }}</h3>
+          </div>
+        </ng-template>
 
-<!--      <div class="space-y-4">-->
-<!--        &lt;!&ndash; Server IP &ndash;&gt;-->
-<!--        <div class="flex items-center">-->
-<!--          <i class="pi pi-server mr-2 text-gray-600"></i>-->
-<!--          <span class="text-sm text-gray-600 mr-2">IP:</span>-->
-<!--          <span class="font-mono text-sm font-semibold">{{ server.ip }}</span>-->
-<!--        </div>-->
+        <div class="server-info">
+          <!-- Server IP -->
+          <div class="info-row">
+            <span class="label">IP:</span>
+            <span class="value ip-value">{{ server.ip }}</span>
+          </div>
 
-<!--        &lt;!&ndash; Runtime &ndash;&gt;-->
-<!--        <div class="flex items-center">-->
-<!--          <i class="pi pi-clock mr-2 text-gray-600"></i>-->
-<!--          <span class="text-sm text-gray-600 mr-2">Runtime:</span>-->
-<!--          <span class="text-sm font-semibold">{{ server.runtime }}</span>-->
-<!--        </div>-->
+          <!-- Status -->
+          <div class="info-row">
+            <span class="label">Status:</span>
+            <p-tag
+              [value]="server.status === 'online' ? 'Online' : 'Offline'"
+              [severity]="server.status === 'online' ? 'success' : 'danger'">
+            </p-tag>
+          </div>
 
-<!--        &lt;!&ndash; CPU Usage &ndash;&gt;-->
-<!--        <div>-->
-<!--          <div class="flex justify-between items-center mb-2">-->
-<!--            <div class="flex items-center">-->
-<!--              <i class="pi pi-microchip mr-2 text-gray-600"></i>-->
-<!--              <span class="text-sm text-gray-600">CPU</span>-->
-<!--            </div>-->
-<!--            <span class="text-sm font-semibold">{{ server.cpuUsage }}%</span>-->
-<!--          </div>-->
-<!--          <p-progressBar-->
-<!--            [value]="server.cpuUsage"-->
-<!--            [showValue]="false"-->
-<!--            [style]="{'height': '8px'}"-->
-<!--            [styleClass]="getCpuProgressClass(server.cpuUsage)">-->
-<!--          </p-progressBar>-->
-<!--        </div>-->
+          <!-- Runtime -->
+          <div class="info-row">
+            <span class="label">Runtime:</span>
+            <span class="value">{{ server.runtime }}</span>
+          </div>
 
-<!--        &lt;!&ndash; RAM Usage &ndash;&gt;-->
-<!--        <div>-->
-<!--          <div class="flex justify-between items-center mb-2">-->
-<!--            <div class="flex items-center">-->
-<!--              <i class="pi pi-database mr-2 text-gray-600"></i>-->
-<!--              <span class="text-sm text-gray-600">RAM</span>-->
-<!--            </div>-->
-<!--            <span class="text-sm font-semibold">{{ server.ramUsage }}%</span>-->
-<!--          </div>-->
-<!--          <p-progressBar-->
-<!--            [value]="server.ramUsage"-->
-<!--            [showValue]="false"-->
-<!--            [style]="{'height': '8px'}"-->
-<!--            [styleClass]="getRamProgressClass(server.ramUsage)">-->
-<!--          </p-progressBar>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </p-card>-->
-<!--  </div>-->
-<!--</div>-->
+          <!-- CPU Usage -->
+          <div class="usage-section">
+            <div class="usage-header">
+              <span class="label">CPU:</span>
+              <span class="value">{{ server.cpuUsage }}%</span>
+            </div>
+            <div class="progress-bar-container">
+              <div
+                class="progress-bar"
+                [ngClass]="{
+                  'progress-low': server.cpuUsage < 50,
+                  'progress-medium': server.cpuUsage >= 50 && server.cpuUsage < 80,
+                  'progress-high': server.cpuUsage >= 80
+                }"
+                [style.width.%]="server.cpuUsage">
+              </div>
+            </div>
+          </div>
 
-<h3>Server List</h3>
-<p-table [value]="servers" stripedRows [tableStyle]="{'min-width': '50rem'}">
-  <ng-template #header>
-    <tr>
-
-    </tr>
-  </ng-template>
-  <ng-template #body let-servers>
-    <tr>
-      <td>{{servers.name}}</td>
-      <td>{{servers.name}}</td>
-      <td>{{servers.name}}</td>
-      <td>{{servers.name}}</td>
-    </tr>
-  </ng-template>
-</p-table>
+          <!-- RAM Usage -->
+          <div class="usage-section">
+            <div class="usage-header">
+              <span class="label">RAM:</span>
+              <span class="value">{{ server.ramUsage }}%</span>
+            </div>
+            <div class="progress-bar-container">
+              <div
+                class="progress-bar"
+                [ngClass]="{
+                  'progress-low': server.ramUsage < 50,
+                  'progress-medium': server.ramUsage >= 50 && server.ramUsage < 80,
+                  'progress-high': server.ramUsage >= 80
+                }"
+                [style.width.%]="server.ramUsage">
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </p-card>
+</div>

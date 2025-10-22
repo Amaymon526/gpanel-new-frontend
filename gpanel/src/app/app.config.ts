@@ -1,7 +1,7 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { providePrimeNG } from 'primeng/config';
-import Lara from '@primeuix/themes/Lara';
+import Lara from '@primeuix/themes/lara';
 import { routes } from './app.routes';
 import { definePreset } from '@primeuix/themes';
 import { provideAnimations } from '@angular/platform-browser/animations';

@@ -1,31 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DockerServer, ServerStatus } from '../../models/DockerServer';
-import {ButtonModule} from 'primeng/button';
-import {TableModule} from 'primeng/table';
-import {Card} from 'primeng/card';
-import {Tag} from 'primeng/tag';
+import { ButtonModule } from 'primeng/button';
+import { Card } from 'primeng/card';
+import { Tag } from 'primeng/tag';
+import { Chip } from "primeng/chip";
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
-  selector: 'app-server-list',
-  imports: [
-    CommonModule,
-    ButtonModule,
-    TableModule,
-    Card,
-    Tag
-  ],
-  templateUrl: './server-list.html',
-  styleUrl: './server-list.css'
+  selector: 'app-server-detail',
+    imports: [
+        CommonModule,
+        ButtonModule,
+        Card,
+        Tag,
+        Chip,
+        Tooltip
+    ],
+  templateUrl: './server-detail.html',
+  styleUrl: './server-detail.css'
 })
-export class ServerList implements OnInit{
-  servers: DockerServer[] = []
+export class ServerDetail implements OnInit {
+  server?: DockerServer;
+  serverId: string = '';
+  ipCopied: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.servers = [
+    this.serverId = this.route.snapshot.paramMap.get('id') || '';
+    this.loadServerData();
+  }
+
+  loadServerData() {
+    // Mock data - später durch echten API Call ersetzen
+    const mockServers: DockerServer[] = [
       {
         id: '1',
         name: 'Production Server',
@@ -72,6 +85,12 @@ export class ServerList implements OnInit{
         ramUsage: 25
       }
     ];
+
+    this.server = mockServers.find(s => s.id === this.serverId);
+  }
+
+  goBack() {
+    this.router.navigate(['/']);
   }
 
   getCpuProgressClass(usage: number): string {
@@ -86,7 +105,14 @@ export class ServerList implements OnInit{
     return 'progress-high';
   }
 
-  navigateToServer(serverId: string): void {
-    this.router.navigate(['/server', serverId]);
+  copyToClipboard(text: string): void {
+    navigator.clipboard.writeText(text).then(() => {
+      this.ipCopied = true;
+      setTimeout(() => {
+        this.ipCopied = false;
+      }, 1000);
+    }).catch(err => {
+      console.error('Failed to copy text: ', err);
+    });
   }
 }
