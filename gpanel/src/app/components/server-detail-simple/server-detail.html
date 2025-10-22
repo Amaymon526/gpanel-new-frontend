@@ -6,6 +6,10 @@
       (click)="goBack()"
       [outlined]="true">
     </p-button>
+    <p-togglebutton [(ngModel)]="checked" onLabel="On" offLabel="Off" size="small" class="min-w-16"></p-togglebutton>
+<!--    <span class="material-symbols-outlined">-->
+<!--terminal-->
+<!--</span>-->
   </div>
 
   <div *ngIf="server" class="detail-content">

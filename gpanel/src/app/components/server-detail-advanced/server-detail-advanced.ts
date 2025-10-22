@@ -1,30 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DockerServer, ServerStatus } from '../../models/DockerServer';
-import { ButtonModule } from 'primeng/button';
-import { Card } from 'primeng/card';
-import { Tag } from 'primeng/tag';
-import { Chip } from "primeng/chip";
-import { Tooltip } from 'primeng/tooltip';
+import { Sidebar } from '../../layout/sidebar/sidebar';
+import {Breadcrumb} from 'primeng/breadcrumb';
+import {MenuItem} from 'primeng/api';
 
 @Component({
-  selector: 'app-server-detail',
-    imports: [
-        CommonModule,
-        ButtonModule,
-        Card,
-        Tag,
-        Chip,
-        Tooltip
-    ],
-  templateUrl: './server-detail.html',
-  styleUrl: './server-detail.css'
+  selector: 'app-server-detail-advanced',
+  standalone: true,
+  imports: [CommonModule, Sidebar, Breadcrumb],
+  templateUrl: './server-detail-advanced.html',
+  styleUrl: './server-detail-advanced.css'
 })
-export class ServerDetail implements OnInit {
+export class ServerDetailAdvanced implements OnInit {
   server?: DockerServer;
   serverId: string = '';
-  ipCopied: boolean = false;
+
+  items: MenuItem[] | undefined;
+  home: MenuItem | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,6 +28,16 @@ export class ServerDetail implements OnInit {
   ngOnInit() {
     this.serverId = this.route.snapshot.paramMap.get('id') || '';
     this.loadServerData();
+
+    this.items = [
+      { label: 'Electronics' },
+      { label: 'Computer' },
+      { label: 'Accessories' },
+      { label: 'Keyboard' },
+      { label: 'Wireless' }
+    ];
+
+    this.home = { icon: 'pi pi-home', routerLink: '/' };
   }
 
   loadServerData() {
@@ -93,26 +97,24 @@ export class ServerDetail implements OnInit {
     this.router.navigate(['/']);
   }
 
-  getCpuProgressClass(usage: number): string {
-    if (usage < 50) return 'progress-low';
-    if (usage < 80) return 'progress-medium';
-    return 'progress-high';
+  @HostListener('document:keydown.escape')
+  handleEscapeKey(): void {
+    this.goBack();
   }
 
-  getRamProgressClass(usage: number): string {
-    if (usage < 50) return 'progress-low';
-    if (usage < 80) return 'progress-medium';
-    return 'progress-high';
+  getStatusColor(status: ServerStatus): string {
+    return status === ServerStatus.ONLINE ? 'from-green-400 dark:from-green-300 to-green-600 dark:to-green-500' : 'from-red-400 dark:from-red-300 to-red-600 dark:to-red-500';
   }
 
-  copyToClipboard(text: string): void {
-    navigator.clipboard.writeText(text).then(() => {
-      this.ipCopied = true;
-      setTimeout(() => {
-        this.ipCopied = false;
-      }, 1000);
-    }).catch(err => {
-      console.error('Failed to copy text: ', err);
-    });
+  getCpuColor(usage: number): string {
+    if (usage < 50) return 'from-green-400 dark:from-green-300 to-green-600 dark:to-green-500';
+    if (usage < 80) return 'from-yellow-400 dark:from-yellow-300 to-yellow-600 dark:to-yellow-500';
+    return 'from-red-400 dark:from-red-300 to-red-600 dark:to-red-500';
+  }
+
+  getRamColor(usage: number): string {
+    if (usage < 50) return 'from-cyan-400 dark:from-cyan-300 to-cyan-600 dark:to-cyan-500';
+    if (usage < 80) return 'from-orange-400 dark:from-orange-300 to-orange-600 dark:to-orange-500';
+    return 'from-red-400 dark:from-red-300 to-red-600 dark:to-red-500';
   }
 }

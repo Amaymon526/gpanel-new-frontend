@@ -1,8 +1,6 @@
 .sidebar {
   width: 230px;
   height: 100vh;
-  background-color: #111315;
-  color: #ddd;
   display: flex;
   flex-direction: column;
   padding-top: 1rem;
@@ -18,7 +16,6 @@
 
 .logo {
   font-weight: bold;
-  background: #444;
   padding: 0.5rem 0.8rem;
   border-radius: 6px;
 }
@@ -39,17 +36,19 @@
   align-items: center;
   padding: 0.8rem 1rem;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, border-left-width 0.3s ease, padding-left 0.3s ease;
   position: relative;
+  border-left: 0px solid #8a4cff;
 }
 
 .sidebar-menu li:hover {
-  background: #1a1d20;
+  border-left: 7px solid #8a4cff;
+  padding-left: calc(1rem - 4px);
 }
 
 .sidebar-menu li.active {
-  background: #2a2f33;
   border-left: 3px solid #8a4cff;
+  padding-left: calc(1rem - 4px);
 }
 
 .sidebar-menu i {
@@ -59,8 +58,6 @@
 }
 
 .badge {
-  background: #333;
-  color: #aaa;
   font-size: 0.75rem;
   padding: 0.1rem 0.4rem;
   border-radius: 6px;
@@ -69,5 +66,4 @@
 
 .badge.red {
   background: #ff4444;
-  color: white;
 }
